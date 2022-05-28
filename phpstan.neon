@@ -1,0 +1,17 @@
+parameters:
+	level: 8
+	paths:
+		- src
+		- tests
+rules:
+    - XUnitLint\Rule\Conditional\BooleanOrRule
+    - XUnitLint\Rule\Conditional\IfRule
+    - XUnitLint\Rule\Conditional\ForEachRule
+    - XUnitLint\Rule\Conditional\WhileRule
+    - XUnitLint\Rule\Conditional\BooleanOrRule
+    - XUnitLint\Rule\ObscureTest\EagerTestRule
+#    - App\StanExtensions\XUnit\ConditionalRule\IfRule
+#    - App\StanExtensions\XUnit\ConditionalRule\ForEachRule
+#    - App\StanExtensions\XUnit\ConditionalRule\WhileRule
+#    - App\StanExtensions\XUnit\ConditionalRule\BooleanAndRule
+#    - App\StanExtensions\XUnit\ConditionalRule\BooleanOrRule

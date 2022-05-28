@@ -1,0 +1,29 @@
+{
+    "name": "ethancarlsson/x-unit-lint",
+    "description": "PHPStan linting for PHPUnit based on the smells in the XUnit Patterns book by Gerard Meszaros",
+    "require-dev": {
+        "phpstan/phpstan": "^1.7",
+        "nikic/php-parser": "^4.13.0",
+        "php-parallel-lint/php-parallel-lint": "^1.2",
+        "phpstan/phpstan-strict-rules": "^1.0",
+        "phpunit/phpunit": "^9.5",
+        "roave/security-advisories": "dev-latest"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "XUnitLint\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "XUnitLint\\Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "ethancarlsson",
+            "email": "ethanmcarlsson@gmail.com"
+        }
+    ]
+}
