@@ -51,11 +51,14 @@ class EagerTestRuleTest extends TestCase
     /**
      * @throws ShouldNotHappenException
      */
-    public function testProcessNode_withThreeAssertMethods_returnsErrors(): void
+    public function testProcessNode_with4AssertMethods_returnsErrors(): void
     {
         $node = new StaticCall(new Name('assertEquals'), 'assertEquals', []);
         $scope = (new TestMethodScopeMockFactory())->createValidTestMethodScopeMock();
 
+        $this->sut->processNode($node, $scope);
+        $this->sut->processNode($node, $scope);
+        $this->sut->processNode($node, $scope);
         $this->sut->processNode($node, $scope);
         $errors = $this->sut->processNode($node, $scope);
 

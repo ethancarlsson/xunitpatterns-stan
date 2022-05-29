@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace XUnitLint\Rule\ObscureTest;
 
+use PHPStan\Rules\RuleError;
 use XUnitLint\Facade\TestScope;
 use PhpParser\Node;
 use PhpParser\Node\Expr\StaticCall;
@@ -30,7 +31,7 @@ class EagerTestRule implements Rule
     /**
      * @param StaticCall $node
      * @param Scope $scope
-     * @return array
+     * @return RuleError[]
      * @throws ShouldNotHappenException
      */
     public function processNode(Node $node, Scope $scope): array
@@ -48,7 +49,7 @@ class EagerTestRule implements Rule
 
         $this->assertCounter++;
 
-        if ($this->assertCounter <= 1) {
+        if ($this->assertCounter <= 4) {
             return [];
         }
 

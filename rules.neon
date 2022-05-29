@@ -1,0 +1,7 @@
+rules:
+    - XUnitLint\Rule\Conditional\BooleanOrRule
+    - XUnitLint\Rule\Conditional\IfRule
+    - XUnitLint\Rule\Conditional\ForEachRule
+    - XUnitLint\Rule\Conditional\WhileRule
+    - XUnitLint\Rule\Conditional\BooleanOrRule
+    - XUnitLint\Rule\ObscureTest\EagerTestRule
