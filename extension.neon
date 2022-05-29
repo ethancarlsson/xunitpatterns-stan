@@ -1,2 +1,2 @@
 includes:
-    rules.neon
+    - rules.neon
