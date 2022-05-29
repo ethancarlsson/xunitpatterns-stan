@@ -11,6 +11,9 @@
         "roave/security-advisories": "dev-latest"
     },
     "license": "MIT",
+    "scripts": {
+        "test": "./vendor/bin/phpunit tests"
+    },
     "autoload": {
         "psr-4": {
             "XUnitLint\\": "src/"
