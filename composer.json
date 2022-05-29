@@ -2,6 +2,7 @@
     "name": "x-unit-patterns/php-unit-patterns-stan",
     "description": "PHPStan linting for PHPUnit based on the smells in the XUnit Patterns book by Gerard Meszaros",
     "type": "phpstan-extension",
+    "version": "0.1.1",
     "homepage": "https://github.com/ethancarlsson/phpunitx",
     "require-dev": {
         "phpstan/phpstan": "^1.7",
