@@ -1,5 +1,5 @@
 {
-    "name": "ethancarlsson/x-unit-lint",
+    "name": "x-unit-patterns/php-unit-patterns-stan",
     "description": "PHPStan linting for PHPUnit based on the smells in the XUnit Patterns book by Gerard Meszaros",
     "require-dev": {
         "phpstan/phpstan": "^1.7",
