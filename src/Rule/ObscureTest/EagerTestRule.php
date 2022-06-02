@@ -41,7 +41,7 @@ class EagerTestRule implements Rule
             return [];
         }
 
-        if (!(new TestScope($scope))->isInTestMethod()) {
+        if ((new TestScope($scope))->isInTestMethod() === false) {
             return [];
         }
 

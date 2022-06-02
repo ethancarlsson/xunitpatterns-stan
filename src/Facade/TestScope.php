@@ -6,6 +6,8 @@ namespace XUnitLint\Facade;
 
 use PHPStan\Analyser\Scope;
 use PHPStan\Reflection\ClassReflection;
+use PHPStan\Reflection\FunctionReflection;
+use PHPStan\Reflection\MethodReflection;
 use PHPUnit\Framework\TestCase;
 
 class TestScope
@@ -21,6 +23,7 @@ class TestScope
     {
         $method = $this->scope->getFunction();
         $class = $this->scope->getClassReflection();
+
         if ($method === null || $class === null) {
             return false;
         }
@@ -29,7 +32,7 @@ class TestScope
             return false;
         }
 
-        if (!preg_match('/^test\w+/', $method->getName())) {
+        if ($this->hasTestPrependedToMethodName($method)) {
             return false;
         }
 
@@ -44,5 +47,10 @@ class TestScope
             }
         }
         return false;
+    }
+
+    private function hasTestPrependedToMethodName(MethodReflection|FunctionReflection $method): bool
+    {
+        return preg_match('/^test\w+/', $method->getName()) === false;
     }
 }
