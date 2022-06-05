@@ -4,4 +4,4 @@ rules:
     - XUnitLint\Rule\Conditional\ForEachRule
     - XUnitLint\Rule\Conditional\WhileRule
     - XUnitLint\Rule\Conditional\BooleanOrRule
-    - XUnitLint\Rule\ObscureTest\EagerTestRule
+    - XUnitLint\Rule\ObscureTest\AssertionRouletteRule

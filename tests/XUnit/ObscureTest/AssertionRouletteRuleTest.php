@@ -5,21 +5,21 @@ declare(strict_types=1);
 namespace XUnitLint\Tests\XUnit\ObscureTest;
 
 use PHPStan\ShouldNotHappenException;
-use XUnitLint\Rule\ObscureTest\EagerTestRule;
+use XUnitLint\Rule\ObscureTest\AssertionRouletteRule;
 use XUnitLint\Tests\Mock\TestMethodScopeMockFactory;
 use PhpParser\Node\Expr\StaticCall;
 use PhpParser\Node\Name;
 use PHPUnit\Framework\TestCase;
 
-class EagerTestRuleTest extends TestCase
+class AssertionRouletteRuleTest extends TestCase
 {
 
-    private EagerTestRule $sut;
+    private AssertionRouletteRule $sut;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->sut = new EagerTestRule();
+        $this->sut = new AssertionRouletteRule();
     }
 
     /**

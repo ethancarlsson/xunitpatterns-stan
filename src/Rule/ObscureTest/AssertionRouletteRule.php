@@ -17,7 +17,7 @@ use PHPStan\ShouldNotHappenException;
 /**
  * @implements Rule<StaticCall>
  */
-class EagerTestRule implements Rule
+class AssertionRouletteRule implements Rule
 {
     private const ASSERT = 'assert';
     private string $currentMethodName = '0';
@@ -64,7 +64,7 @@ class EagerTestRule implements Rule
 
         return [
             RuleErrorBuilder::message(
-                'Eager test: You should ideally have only one assert per test method.'
+                'Assertion roulette: You should ideally have only one assert per test method.'
                 . ' Consider splitting this test into multiple'
                 . ' tests, or if the asserts are related create a custom assertion.'
             )->build(),
