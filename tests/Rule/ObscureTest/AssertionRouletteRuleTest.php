@@ -24,7 +24,6 @@ class AssertionRouletteRuleTest extends TestCase
 
     protected function setUp(): void
     {
-
         $this->assertionMethodService = $this->createMock(AssertionMethodService::class);
         $this->sut = new AssertionRouletteRule($this->assertionMethodService);
         parent::setUp();

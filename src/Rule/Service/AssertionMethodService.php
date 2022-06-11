@@ -15,8 +15,8 @@ use XUnitLint\Answerer\NamespaceAnswererImp;
 class AssertionMethodService
 {
 
-    const ASSERT_COUNT = 'assertCount';
-    const ASSERT_NOT_COUNT = 'assertNotCount';
+    private const ASSERT_COUNT = 'assertCount';
+    private const ASSERT_NOT_COUNT = 'assertNotCount';
     private ReflectionProvider $reflectionProvider;
 
     public function __construct(ReflectionProvider $reflectionProvider)
@@ -77,7 +77,7 @@ class AssertionMethodService
 
         $nameStr = $identifier->toString();
         return ($nameStr === self::ASSERT_COUNT
-            || $nameStr === self::ASSERT_NOT_COUNT)
+                || $nameStr === self::ASSERT_NOT_COUNT)
             && $this->arrayIncludes($possibleExceptions, Exception::class);
     }
 
