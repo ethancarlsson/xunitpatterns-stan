@@ -1,3 +1,5 @@
+services:
+    - XUnitLint\Rule\Service\AssertionMethodService
 rules:
     - XUnitLint\Rule\Conditional\BooleanOrRule
     - XUnitLint\Rule\Conditional\IfRule

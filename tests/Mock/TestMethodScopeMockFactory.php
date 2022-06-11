@@ -12,14 +12,13 @@ use PHPUnit\Framework\TestCase;
 
 class TestMethodScopeMockFactory extends TestCase
 {
-
-
     public function createDefaultTestClassScopeMock(): ClassReflection|MockObject
     {
         $mockClassReflections = $this->createMock(ClassReflection::class);
         $testClass = $this->createMock(ClassReflection::class);
         $testClass->method('getName')->willReturn(TestCase::class);
         $mockClassReflections->method('getParents')->willReturn([$testClass]);
+
         return $mockClassReflections;
     }
 
@@ -27,7 +26,6 @@ class TestMethodScopeMockFactory extends TestCase
     {
         $function = $this->createMock(MethodReflection::class);
         $function->method('getName')->willReturn($name);
-
 
         return $function;
     }

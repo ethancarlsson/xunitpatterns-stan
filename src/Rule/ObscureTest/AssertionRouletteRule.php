@@ -5,21 +5,28 @@ declare(strict_types=1);
 namespace XUnitLint\Rule\ObscureTest;
 
 use PHPStan\Rules\RuleError;
+use XUnitLint\Answerer\NamespaceAnswererImp;
 use XUnitLint\Facade\TestScope;
 use PhpParser\Node;
 use PhpParser\Node\Expr\StaticCall;
-use PhpParser\Node\Identifier;
 use PHPStan\Analyser\Scope;
 use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleErrorBuilder;
 use PHPStan\ShouldNotHappenException;
+use XUnitLint\Rule\Service\AssertionMethodService;
 
 /**
  * @implements Rule<StaticCall>
  */
 class AssertionRouletteRule implements Rule
 {
-    private const ASSERT = 'assert';
+    private AssertionMethodService $assertionMethodService;
+
+    public function __construct(AssertionMethodService $assertionMethodService)
+    {
+        $this->assertionMethodService = $assertionMethodService;
+    }
+
     private string $currentMethodName = '0';
     private int $assertCounter = 0;
 
@@ -36,12 +43,22 @@ class AssertionRouletteRule implements Rule
      */
     public function processNode(Node $node, Scope $scope): array
     {
-        $method = $scope->getFunction();
-        if ($method === null) {
+
+        $namespace = $this->getNamespaceAnswererImp($scope);
+
+
+        if ($this->assertionMethodService->isAnAssertionMethod($node, $namespace) === false) {
             return [];
         }
 
-        if ((new TestScope($scope))->isInTestMethod() === false) {
+        if ((new TestScope($scope))->isInTestClass() === false) {
+            return [];
+        }
+
+
+        $method = $scope->getFunction();
+
+        if ($method === null) {
             return [];
         }
 
@@ -49,16 +66,7 @@ class AssertionRouletteRule implements Rule
 
         $this->assertCounter++;
 
-        if ($this->assertCounter <= 4) {
-            return [];
-        }
-
-        /**
-         * @var Identifier
-         */
-        $methodName = $node->name;
-
-        if (!str_starts_with($methodName->toString(), self::ASSERT)) {
+        if ($this->assertCounter < 5) {
             return [];
         }
 
@@ -80,5 +88,16 @@ class AssertionRouletteRule implements Rule
             $this->assertCounter = 0;
             $this->currentMethodName = $methodName;
         }
+    }
+
+    private function getNamespaceAnswererImp(Scope $scope): NamespaceAnswererImp
+    {
+        return new NamespaceAnswererImp(
+            $scope->getClassReflection()
+                ?->getParentClass()
+                ?->getNativeReflection()
+                ?->getNamespaceName()
+            ?? ''
+        );
     }
 }

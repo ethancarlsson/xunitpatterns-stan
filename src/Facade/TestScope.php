@@ -16,27 +16,31 @@ class TestScope
     {
     }
 
+    public function isInTestClass(): bool
+    {
+        $class = $this->scope->getClassReflection();
+        if ($class === null) {
+            return false;
+        }
+        return $this->hasTestCaseParent($class);
+    }
+
     /**
      * @return bool
      */
     public function isInTestMethod(): bool
     {
         $method = $this->scope->getFunction();
-        $class = $this->scope->getClassReflection();
 
-        if ($method === null || $class === null) {
+        if ($this->isInTestClass() === false) {
             return false;
         }
 
-        if (!$this->hasTestCaseParent($class)) {
-            return false;
+        if ($method === null) {
+           return false;
         }
 
-        if ($this->hasTestPrependedToMethodName($method)) {
-            return false;
-        }
-
-        return true;
+        return $this->hasTestPrependedToMethodName($method);
     }
 
     private function hasTestCaseParent(ClassReflection $class): bool
@@ -51,6 +55,6 @@ class TestScope
 
     private function hasTestPrependedToMethodName(MethodReflection|FunctionReflection $method): bool
     {
-        return preg_match('/^test\w+/', $method->getName()) === false;
+        return (bool)preg_match('/^test\w+/', $method->getName());
     }
 }
