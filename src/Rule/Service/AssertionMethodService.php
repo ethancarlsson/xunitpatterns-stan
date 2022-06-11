@@ -14,7 +14,6 @@ use XUnitLint\Answerer\NamespaceAnswererImp;
 
 class AssertionMethodService
 {
-
     private const ASSERT_COUNT = 'assertCount';
     private const ASSERT_NOT_COUNT = 'assertNotCount';
     private ReflectionProvider $reflectionProvider;
