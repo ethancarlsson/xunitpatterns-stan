@@ -8,6 +8,7 @@ use PhpParser\Node;
 use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Expr\StaticCall;
 use PHPStan\Reflection\ReflectionProvider;
+use PHPUnit\Framework\Exception;
 use PHPUnit\Framework\ExpectationFailedException;
 use XUnitLint\Answerer\NamespaceAnswererImp;
 
@@ -23,7 +24,8 @@ class AssertionMethodService
 
     public function isAnAssertionMethod(MethodCall|StaticCall $node, NamespaceAnswererImp $namespace): bool
     {
-        return $this->canThrowExpectationFailedException($node, $namespace);
+        return $this->canThrowExpectationFailedException($node, $namespace)
+            || $this->isAssertCount($node, $namespace);
     }
 
     /**
@@ -35,38 +37,76 @@ class AssertionMethodService
         MethodCall|StaticCall $node,
         NamespaceAnswererImp $namespace
     ): bool {
-        /**
-         *
-         * @var Node\Identifier
-         */
-        $name = $node->name;
+        $name = $this->getIdentifierFromNode($node);
         $nodeName = new Node\Name($name->toString());
 
-        if ($this->reflectionProvider->hasFunction($nodeName, $namespace) === false) {
+        if ($this->reflectionHasFunction($name, $namespace) === false) {
             return false;
         }
 
-        $functionReflection = $this->reflectionProvider
-            ->getFunction($nodeName, $namespace);
-        $throwTypes = $functionReflection
-            ->getThrowType();
+        $possibleExceptions = $this->getPossibleExceptions($nodeName, $namespace);
 
-
-        $referencedClasses = $throwTypes?->getReferencedClasses() ?? [];
-
-        return $this->includesExpectationFailed($referencedClasses);
+        return $this->arrayIncludes($possibleExceptions, ExpectationFailedException::class);
     }
 
     /**
      * @param string[] $referencedClasses
      */
-    private function includesExpectationFailed(array $referencedClasses): bool
+    private function arrayIncludes(array $referencedClasses, string $exceptionClass): bool
     {
         foreach ($referencedClasses as $throwType) {
-            if ($throwType === ExpectationFailedException::class) {
+            if ($throwType === $exceptionClass) {
                 return true;
             }
         }
         return false;
+    }
+
+     private function isAssertCount(MethodCall|StaticCall $node, NamespaceAnswererImp $namespace): bool
+    {
+        $identifier = $this->getIdentifierFromNode($node);
+        if ($this->reflectionHasFunction($identifier, $namespace) === false) {
+            return false;
+        }
+
+        $name = new Node\Name($identifier->toString());
+
+        $possibleExceptions = $this->getPossibleExceptions($name, $namespace);
+
+        return $identifier->toString() === 'assertCount'
+            && $this->arrayIncludes($possibleExceptions, Exception::class);
+    }
+
+    private function reflectionHasFunction(Node\Identifier $name, NamespaceAnswererImp $namespace): bool
+    {
+        $nodeName = new Node\Name($name->toString());
+        return $this->reflectionProvider->hasFunction($nodeName, $namespace);
+    }
+
+    /**
+     * @param StaticCall|MethodCall $node
+     * @return Node\Identifier
+     */
+    private function getIdentifierFromNode(StaticCall|MethodCall $node): Node\Identifier
+    {
+        /**
+         * @var Node\Identifier
+         */
+        return $node->name;
+    }
+
+    /**
+     * @param Node\Name $nodeName
+     * @param NamespaceAnswererImp $namespace
+     * @return string[]
+     */
+    private function getPossibleExceptions(Node\Name $nodeName, NamespaceAnswererImp $namespace): array
+    {
+        $functionReflection = $this->reflectionProvider
+            ->getFunction($nodeName, $namespace);
+        $throwTypes = $functionReflection
+            ->getThrowType();
+
+        return $throwTypes?->getReferencedClasses() ?? [];
     }
 }
