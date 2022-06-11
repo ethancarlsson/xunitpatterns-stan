@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace XUnitLint\Rule\ObscureTest;
 
+use PhpParser\Node\Expr\CallLike;
 use PHPStan\Rules\RuleError;
 use XUnitLint\Answerer\NamespaceAnswererImp;
 use XUnitLint\Facade\TestScope;
@@ -16,7 +17,7 @@ use PHPStan\ShouldNotHappenException;
 use XUnitLint\Rule\Service\AssertionMethodService;
 
 /**
- * @implements Rule<StaticCall>
+ * @implements Rule<CallLike>
  */
 class AssertionRouletteRule implements Rule
 {

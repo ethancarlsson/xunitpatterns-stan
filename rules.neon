@@ -7,3 +7,4 @@ rules:
     - XUnitLint\Rule\Conditional\WhileRule
     - XUnitLint\Rule\Conditional\BooleanOrRule
     - XUnitLint\Rule\ObscureTest\AssertionRouletteRule
+    - XUnitLint\Rule\ObscureTest\AssertionRouletteNonStaticRule
