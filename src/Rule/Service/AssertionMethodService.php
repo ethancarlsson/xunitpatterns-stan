@@ -15,6 +15,8 @@ use XUnitLint\Answerer\NamespaceAnswererImp;
 class AssertionMethodService
 {
 
+    const ASSERT_COUNT = 'assertCount';
+    const ASSERT_NOT_COUNT = 'assertNotCount';
     private ReflectionProvider $reflectionProvider;
 
     public function __construct(ReflectionProvider $reflectionProvider)
@@ -62,7 +64,7 @@ class AssertionMethodService
         return false;
     }
 
-     private function isAssertCount(MethodCall|StaticCall $node, NamespaceAnswererImp $namespace): bool
+    private function isAssertCount(MethodCall|StaticCall $node, NamespaceAnswererImp $namespace): bool
     {
         $identifier = $this->getIdentifierFromNode($node);
         if ($this->reflectionHasFunction($identifier, $namespace) === false) {
@@ -73,7 +75,9 @@ class AssertionMethodService
 
         $possibleExceptions = $this->getPossibleExceptions($name, $namespace);
 
-        return $identifier->toString() === 'assertCount'
+        $nameStr = $identifier->toString();
+        return ($nameStr === self::ASSERT_COUNT
+            || $nameStr === self::ASSERT_NOT_COUNT)
             && $this->arrayIncludes($possibleExceptions, Exception::class);
     }
 
@@ -109,4 +113,5 @@ class AssertionMethodService
 
         return $throwTypes?->getReferencedClasses() ?? [];
     }
+
 }

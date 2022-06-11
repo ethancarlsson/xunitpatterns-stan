@@ -79,6 +79,7 @@ class AssertionRouletteRuleTest extends TestCase
         $this->sut->processNode($node, $scope);
         $this->sut->processNode($node, $scope);
         $this->sut->processNode($node, $scope);
+
         $errors = $this->sut->processNode($node, $scope);
 
         self::assertCount(1, $errors);
