@@ -19,10 +19,6 @@ use PHPUnit\Framework\TestCase;
 class AssertionMethodServiceTest extends TestCase
 {
 
-    /**
-     * @var mixed|ReflectionProvider|MockObject
-     */
-    private mixed $mockedReflectionProvider;
     private AssertionMethodService $sut;
 
     /**
@@ -34,9 +30,9 @@ class AssertionMethodServiceTest extends TestCase
     {
         $this->mockedThrowType = $this->createMock(Type::class);
 
-        $this->createMockedReflectionProvider();
+        $mockedReflectionProvider = $this->createMockedReflectionProvider($this->mockedThrowType);
 
-        $this->sut = new AssertionMethodService($this->mockedReflectionProvider);
+        $this->sut = new AssertionMethodService($mockedReflectionProvider);
 
         parent::setUp();
     }
@@ -121,18 +117,20 @@ class AssertionMethodServiceTest extends TestCase
         );
     }
 
-    private function createMockedReflectionProvider(): void
+    private function createMockedReflectionProvider(Type $throwType): ReflectionProvider
     {
-        $this->mockedReflectionProvider = $this->createMock(ReflectionProvider::class);
+        $mockedProvider = $this->createMock(ReflectionProvider::class);
         $functionReflection = $this->createMock(FunctionReflection::class);
         $functionReflection->method('getThrowType')
-            ->willReturn($this->mockedThrowType);
+            ->willReturn($throwType);
 
-        $this->mockedReflectionProvider->method('getFunction')
+        $mockedProvider->method('getFunction')
             ->willReturn($functionReflection);
 
-        $this->mockedReflectionProvider
+        $mockedProvider
             ->method('hasFunction')
             ->willReturn(true);
+
+        return $mockedProvider;
     }
 }
