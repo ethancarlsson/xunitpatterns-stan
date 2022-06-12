@@ -9,3 +9,4 @@ rules:
     - XUnitLint\Rule\ObscureTest\AssertionRouletteRule
     - XUnitLint\Rule\ObscureTest\AssertionRouletteNonStaticRule
     - XUnitLint\Rule\AssertionMessage\AssertNeedsMessageRule
+    - XUnitLint\Rule\AssertionMessage\AssertNeedsMessageNonStaticRule

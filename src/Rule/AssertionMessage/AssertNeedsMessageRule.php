@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace XUnitLint\Rule\AssertionMessage;
 
+use PhpParser\Node\Expr\CallLike;
+use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Expr\StaticCall;
 use PHPStan\Analyser\Scope;
 use PHPStan\Rules\Rule;
@@ -15,7 +17,7 @@ use XUnitLint\Answerer\NamespaceAnswererImp;
 use XUnitLint\Rule\Service\AssertionMethodService;
 
 /**
- * @implements  Rule<StaticCall>
+ * @implements  Rule<CallLike>
  */
 class AssertNeedsMessageRule implements Rule
 {
@@ -40,12 +42,12 @@ class AssertNeedsMessageRule implements Rule
     }
 
     /**
-     * @param StaticCall $node
+     * @param StaticCall|MethodCall $node
      * @param Scope $scope
      * @return RuleError[]
      * @throws ShouldNotHappenException
      */
-    public function processNode(Node $node, Scope $scope): array
+    public function processNode(Node|MethodCall $node, Scope $scope): array
     {
         $namespace = $this->getNamespaceAnswererImp($scope);
 
@@ -67,11 +69,11 @@ class AssertNeedsMessageRule implements Rule
     }
 
     /**
-     * @param StaticCall $node
+     * @param StaticCall|MethodCall $node
      * @return RuleError[]
      * @throws ShouldNotHappenException
      */
-    private function getErrors(StaticCall $node): array
+    private function getErrors(StaticCall|MethodCall $node): array
     {
         /**
          * @var Node\Identifier
