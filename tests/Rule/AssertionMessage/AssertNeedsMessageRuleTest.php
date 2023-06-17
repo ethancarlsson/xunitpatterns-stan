@@ -18,7 +18,6 @@ use XUnitLint\Tests\Mock\TestMethodScopeMockFactory;
 
 class AssertNeedsMessageRuleTest extends TestCase
 {
-
     private AssertNeedsMessageRule $sut;
     /**
      * @var MockObject

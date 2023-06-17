@@ -35,7 +35,7 @@ class TestScopeTest extends TestCase
     public function testIsInTestMethod_outsideClass_returnsFalse(): void
     {
         $this->scope->method('getClassReflection')->willReturn(null);
-        self::assertFalse($this->sut->isInTestMethod(),'outside class should return false');
+        self::assertFalse($this->sut->isInTestMethod(), 'outside class should return false');
     }
 
     public function testIsInTestMethod_withRegularFunctionNotNamedTest_returnsFalse(): void

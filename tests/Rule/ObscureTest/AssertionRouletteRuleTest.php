@@ -15,7 +15,6 @@ use PHPUnit\Framework\TestCase;
 
 class AssertionRouletteRuleTest extends TestCase
 {
-
     private AssertionRouletteRule $sut;
     /**
      * @var MockObject

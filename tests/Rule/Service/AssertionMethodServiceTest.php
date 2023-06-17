@@ -18,7 +18,6 @@ use PHPUnit\Framework\TestCase;
 
 class AssertionMethodServiceTest extends TestCase
 {
-
     private AssertionMethodService $sut;
 
     /**

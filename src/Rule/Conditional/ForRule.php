@@ -9,7 +9,6 @@ use PHPStan\Rules\Rule;
 
 class ForRule extends ConditionalTestLogicRule
 {
-
     protected string $message = '(For loops)';
 
     public function getNodeType(): string

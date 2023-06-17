@@ -21,7 +21,6 @@ use XUnitLint\Rule\Service\AssertionMethodService;
  */
 class AssertNeedsMessageRule implements Rule
 {
-
     private const ASSERT_TRUE = 'assertTrue';
     private const ASSERT_FALSE = 'assertFalse';
 
@@ -80,10 +79,12 @@ class AssertNeedsMessageRule implements Rule
          */
         $nodeIdentifier = $node->name;
 
-        if (\in_array(
+        if (
+            \in_array(
                 $nodeIdentifier->name,
                 self::TARGETED_ASSERT_METHODS
-            ) === false) {
+            ) === false
+        ) {
             return [];
         }
 
