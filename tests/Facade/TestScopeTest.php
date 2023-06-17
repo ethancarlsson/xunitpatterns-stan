@@ -82,9 +82,9 @@ class TestScopeTest extends TestCase
     }
 
     /**
-     * @return ClassReflection|MockObject
+     * @return MockObject&ClassReflection
      */
-    private function createMockClassReflectionWithTestSubClass(): ClassReflection|MockObject
+    private function createMockClassReflectionWithTestSubClass(): MockObject
     {
         return (new TestMethodScopeMockFactory())->createDefaultTestClassScopeMock();
     }
