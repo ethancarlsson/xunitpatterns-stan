@@ -25,12 +25,11 @@ jobs:
       - name: "Validate composer.json and composer.lock"
         run: "composer validate --strict"
 
-# todo - setup PHPCS
-#      - name: "Install dependencies"
-#        run: "composer install --no-interaction --no-progress"
-#
-#      - name: "Coding Standard"
-#        run: "composer cs"
+      - name: "Install dependencies"
+        uses: "ramsey/composer-install@v2"
+
+      - name: "Coding Standard"
+        run: "composer cs"
 
   tests:
     name: "Tests"
