@@ -37,7 +37,7 @@ class TestScope
         }
 
         if ($method === null) {
-           return false;
+            return false;
         }
 
         return $this->hasTestPrependedToMethodName($method);

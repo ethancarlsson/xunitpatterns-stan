@@ -112,5 +112,4 @@ class AssertionMethodService
 
         return $throwTypes?->getReferencedClasses() ?? [];
     }
-
 }

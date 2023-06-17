@@ -12,7 +12,10 @@ use PHPUnit\Framework\TestCase;
 
 class TestMethodScopeMockFactory extends TestCase
 {
-    public function createDefaultTestClassScopeMock(): ClassReflection|MockObject
+    /**
+     * @return MockObject&ClassReflection
+     */
+    public function createDefaultTestClassScopeMock(): MockObject
     {
         $mockClassReflections = $this->createMock(ClassReflection::class);
         $testClass = $this->createMock(ClassReflection::class);

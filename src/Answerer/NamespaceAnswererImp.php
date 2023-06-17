@@ -8,7 +8,6 @@ use PHPStan\Reflection\NamespaceAnswerer;
 
 class NamespaceAnswererImp implements NamespaceAnswerer
 {
-
     public function __construct(private string $namespaceName)
     {
     }
