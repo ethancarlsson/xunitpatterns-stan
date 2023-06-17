@@ -7,9 +7,6 @@ namespace XUnitLint\Rule\Conditional;
 use PhpParser\Node\Stmt\For_;
 use PHPStan\Rules\Rule;
 
-/**
- * @implements Rule<For_>
- */
 class ForRule extends ConditionalTestLogicRule
 {
 
