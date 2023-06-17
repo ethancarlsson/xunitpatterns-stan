@@ -29,13 +29,13 @@ class TestScopeTest extends TestCase
     public function testIsInTestMethod_outsideFunction_returnsFalse(): void
     {
         $this->scope->method('getFunction')->willReturn(null);
-        self::assertFalse($this->sut->isInTestMethod());
+        self::assertFalse($this->sut->isInTestMethod(), 'outside function should return false');
     }
 
     public function testIsInTestMethod_outsideClass_returnsFalse(): void
     {
         $this->scope->method('getClassReflection')->willReturn(null);
-        self::assertFalse($this->sut->isInTestMethod());
+        self::assertFalse($this->sut->isInTestMethod(),'outside class should return false');
     }
 
     public function testIsInTestMethod_withRegularFunctionNotNamedTest_returnsFalse(): void
@@ -43,7 +43,7 @@ class TestScopeTest extends TestCase
         $mockClassReflection = $this->createMock(ClassReflection::class);
         $this->scope->method('getClassReflection')->willReturn($mockClassReflection);
         $this->scope->method('getFunction')->willReturn($this->createMockFunctionReflection('notATestFunction'));
-        self::assertFalse($this->sut->isInTestMethod());
+        self::assertFalse($this->sut->isInTestMethod(), 'notATestFunction should return false');
     }
 
     public function testIsInTestMethod_withFunctionNamedTest_returnsTrue(): void
@@ -51,7 +51,7 @@ class TestScopeTest extends TestCase
         $mockClassReflection = $this->createMockClassReflectionWithTestSubClass();
         $this->scope->method('getClassReflection')->willReturn($mockClassReflection);
         $this->scope->method('getFunction')->willReturn($this->createMockFunctionReflection('testFunction'));
-        self::assertTrue($this->sut->isInTestMethod());
+        self::assertTrue($this->sut->isInTestMethod(), 'testFunction should return true');
     }
 
     public function testIsInTestMethod_withFunctionNamedTestNotInTestClass_returnsFalse(): void
@@ -62,7 +62,7 @@ class TestScopeTest extends TestCase
         $this->scope->method('getClassReflection')->willReturn($mockClassReflection);
 
         $this->scope->method('getFunction')->willReturn($this->createMockFunctionReflection('testFunction'));
-        self::assertFalse($this->sut->isInTestMethod());
+        self::assertFalse($this->sut->isInTestMethod(), 'not in test class should return false');
     }
 
     public function testIsInTestMethod_withFunctionNotNamedTestInTestClassWithTestDocBlock_returnsTrue(): void
@@ -73,7 +73,7 @@ class TestScopeTest extends TestCase
         $this->scope->method('getClassReflection')->willReturn($mockClassReflection);
 
         $this->scope->method('getFunction')->willReturn($this->createMockFunctionReflection('testFunction'));
-        self::assertFalse($this->sut->isInTestMethod());
+        self::assertFalse($this->sut->isInTestMethod(), 'function not named test should return false');
     }
 
     private function createMockFunctionReflection(?string $name): mixed
@@ -82,9 +82,9 @@ class TestScopeTest extends TestCase
     }
 
     /**
-     * @return ClassReflection|MockObject
+     * @return MockObject&ClassReflection
      */
-    private function createMockClassReflectionWithTestSubClass(): ClassReflection|MockObject
+    private function createMockClassReflectionWithTestSubClass(): MockObject
     {
         return (new TestMethodScopeMockFactory())->createDefaultTestClassScopeMock();
     }
