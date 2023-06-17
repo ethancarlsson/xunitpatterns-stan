@@ -37,7 +37,7 @@ class AssertNeedsMessageRuleTest extends TestCase
     /**
      * @return iterable<string, array{name: string, args: array<Arg>, expectedErrorCount: int}>
      */
-    private function provideAssertionMethods(): iterable
+    public function provideAssertionMethods(): iterable
     {
         yield 'assertTrue with no message' => [
             'name' => 'assertTrue',
