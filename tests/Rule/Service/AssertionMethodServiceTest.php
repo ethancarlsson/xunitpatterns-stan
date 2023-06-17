@@ -112,7 +112,8 @@ class AssertionMethodServiceTest extends TestCase
 
         self::assertFalse(
             $isAnAssertionMethod,
-            'Failed asserting that a method that doesn\'t throw a PHPUnit error is not an assertion method just because of the method name'
+            'Failed asserting that a method that doesn\'t throw'
+            . ' a PHPUnit error is not an assertion method just because of the method name'
         );
     }
 
